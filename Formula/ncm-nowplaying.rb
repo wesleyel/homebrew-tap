@@ -1,12 +1,12 @@
 # Template for the Homebrew formula, and the single source of truth for it.
-# The release workflow fills in 0.1.0 / 1920f45bae9379bce73549d6f5ec74ba03e18d703b4a9930844ccbdf0918797b and pushes the result to
+# The release workflow fills in 0.1.1 / a16f5591b0516e246b5e63a7517fde002c99bcca1152ebb12884e04f3f927eed and pushes the result to
 # wesleyel/homebrew-tap. Do not edit Formula/ncm-nowplaying.rb in the tap directly;
 # the next release overwrites it.
 class NcmNowplaying < Formula
   desc "Real-time playback position and word-level lyrics from NetEase Cloud Music on macOS"
   homepage "https://github.com/wesleyel/ncm-nowplaying"
-  url "https://github.com/wesleyel/ncm-nowplaying/releases/download/v0.1.0/ncm-nowplaying-0.1.0-macos-universal.tar.gz"
-  sha256 "1920f45bae9379bce73549d6f5ec74ba03e18d703b4a9930844ccbdf0918797b"
+  url "https://github.com/wesleyel/ncm-nowplaying/releases/download/v0.1.1/ncm-nowplaying-0.1.1-macos-universal.tar.gz"
+  sha256 "a16f5591b0516e246b5e63a7517fde002c99bcca1152ebb12884e04f3f927eed"
   license "MIT"
 
   depends_on :macos
