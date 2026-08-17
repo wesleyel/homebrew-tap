@@ -1,12 +1,12 @@
 # Template for the Homebrew formula, and the single source of truth for it.
-# The release workflow fills in 0.1.0 / 1afcb11bedafa79eafafcf744fffe1b9020af1ccf3a676bf4f8715a545fd48ea and pushes the result to
+# The release workflow fills in 0.1.0 / 69c0a6467a2afea168e4c51f9eea2295be4e826a1fb4d64fa1513e005cb5b869 and pushes the result to
 # wesleyel/homebrew-tap. Do not edit Formula/clipd.rb in the tap directly;
 # the next release overwrites it.
 class Clipd < Formula
   desc "HTTP bridge to the macOS pasteboard"
   homepage "https://github.com/wesleyel/clipd"
   url "https://github.com/wesleyel/clipd/releases/download/v0.1.0/clipd-0.1.0-macos-universal.tar.gz"
-  sha256 "1afcb11bedafa79eafafcf744fffe1b9020af1ccf3a676bf4f8715a545fd48ea"
+  sha256 "69c0a6467a2afea168e4c51f9eea2295be4e826a1fb4d64fa1513e005cb5b869"
   license "MIT"
 
   depends_on :macos
