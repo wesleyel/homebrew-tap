@@ -21,12 +21,7 @@ brew install wesleyel/tap/clipd
 brew services start clipd
 ```
 
-`clipd` 用 Homebrew 的 service 开机自启，不要 `sudo brew services start` —— 剪贴板是按用户隔离的。原先手写的 `com.wesley.clipd` LaunchAgent 已经从源仓库拿掉了，若本机还在跑，先卸再切过来：
-
-```bash
-launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.wesley.clipd.plist
-rm -f ~/Library/LaunchAgents/com.wesley.clipd.plist
-```
+`clipd` 用 Homebrew 的 service 开机自启，不要 `sudo brew services start` —— 剪贴板是按用户隔离的。
 
 ## Cask
 

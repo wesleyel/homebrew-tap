@@ -31,16 +31,9 @@ class Clipd < Formula
 
         brew services start clipd
 
-      To require a token, add CLIPD_TOKEN to the generated LaunchAgent, or run
-      in the foreground:
+      To require a token, set CLIPD_TOKEN or run in the foreground:
 
         clipd --token s3cret --notify
-
-      If you previously used the hand-written LaunchAgent, unload it first so
-      it does not fight Homebrew for the port:
-
-        launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.wesley.clipd.plist
-        rm -f ~/Library/LaunchAgents/com.wesley.clipd.plist
     EOS
   end
 
