@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Asia/Shanghai",
+  "packageRules": [
+    {
+      "description": "Formulae: native manager already rewrites url + sha256",
+      "matchManagers": ["homebrew"],
+      "automerge": false
+    },
+    {
+      "description": "Casks: version only; CI fills sha256 then merges",
+      "matchManagers": ["custom.regex"],
+      "automerge": false
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^Casks/open-dictionary.*\\.rb$/"],
+      "matchStrings": [
+        "cask \"(?<depName>[^\"]+)\" do\\s+version \"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "packageNameTemplate": "wesleyel/opendict-apple",
+      "extractVersionTemplate": "^appledict-v(?<version>\\d+(?:\\.\\d+)+)$"
+    }
+  ]
+}

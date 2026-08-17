@@ -1,0 +1,145 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  HOMEBREW_NO_AUTO_UPDATE: 1
+  HOMEBREW_NO_ANALYTICS: 1
+  HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Tap this checkout
+        run: brew tap wesleyel/tap "$GITHUB_WORKSPACE"
+
+      - name: List changed formulae and casks
+        id: changed
+        env:
+          BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
+        run: |
+          set -euo pipefail
+          if [ -n "$BASE" ]; then
+            git fetch --no-tags origin "${{ github.base_ref }}"
+            files=$(git diff --name-only "$BASE"...HEAD)
+          else
+            files=$(git ls-files 'Formula/*.rb' 'Casks/*.rb')
+          fi
+          formulae=""
+          casks=""
+          for f in $files; do
+            case "$f" in
+              Formula/*.rb) formulae="$formulae $(basename "$f" .rb)" ;;
+              Casks/*.rb)   casks="$casks $(basename "$f" .rb)" ;;
+            esac
+          done
+          formulae=${formulae# }
+          casks=${casks# }
+          echo "formulae=$formulae" >> "$GITHUB_OUTPUT"
+          echo "casks=$casks" >> "$GITHUB_OUTPUT"
+          echo "formulae: ${formulae:-none}"
+          echo "casks: ${casks:-none}"
+
+      - name: Fill cask sha256 from release checksums
+        if: steps.changed.outputs.casks != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CASKS: ${{ steps.changed.outputs.casks }}
+        run: |
+          set -euo pipefail
+          patched=0
+          for name in $CASKS; do
+            file="Casks/${name}.rb"
+            version=$(sed -n 's/^  version "\(.*\)"/\1/p' "$file" | head -1)
+            case "$name" in
+              open-dictionary-audio)
+                asset="OpenDictionary-audio.dictionary.zip"
+                sums="SHA256SUMS-audio.txt"
+                ;;
+              open-dictionary)
+                asset="OpenDictionary.dictionary.zip"
+                sums="SHA256SUMS.txt"
+                ;;
+              *)
+                echo "no checksum mapping for $name, skip"
+                continue
+                ;;
+            esac
+            tmp=$(mktemp -d)
+            gh release download "appledict-v${version}" \
+              --repo wesleyel/opendict-apple --pattern "$sums" --dir "$tmp"
+            sha=$(awk -v a="$asset" '$2 == a { print $1 }' "$tmp/$sums")
+            if [ -z "$sha" ]; then
+              echo "::error::no checksum for $asset in $sums"
+              exit 1
+            fi
+            if ! grep -q "sha256 \"$sha\"" "$file"; then
+              sed -i.bak -E "s/^  sha256 \"[0-9a-f]{64}\"/  sha256 \"${sha}\"/" "$file"
+              rm -f "$file.bak"
+              patched=1
+              echo "updated $file -> $sha"
+            fi
+          done
+          if [ "$patched" -eq 1 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add Casks
+            git commit -m "Fill cask sha256 from release checksums"
+            git push
+          fi
+
+      - name: brew style
+        run: brew style "$GITHUB_WORKSPACE/Formula" "$GITHUB_WORKSPACE/Casks"
+
+      - name: Audit and test formulae
+        if: steps.changed.outputs.formulae != ''
+        env:
+          FORMULAE: ${{ steps.changed.outputs.formulae }}
+        run: |
+          set -euo pipefail
+          for name in $FORMULAE; do
+            brew audit --strict --online "wesleyel/tap/${name}"
+            brew install "wesleyel/tap/${name}"
+            brew test "wesleyel/tap/${name}"
+          done
+
+      - name: Audit casks
+        if: steps.changed.outputs.casks != ''
+        env:
+          CASKS: ${{ steps.changed.outputs.casks }}
+        run: |
+          set -euo pipefail
+          for name in $CASKS; do
+            brew audit --cask "wesleyel/tap/${name}"
+          done
+
+      - name: Merge Renovate PR
+        if: github.event_name == 'pull_request' && github.actor == 'renovate[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          state=$(gh pr view "$PR" --json state --jq .state)
+          if [ "$state" != "OPEN" ]; then
+            echo "PR $PR is $state, nothing to merge"
+            exit 0
+          fi
+          gh pr merge "$PR" --squash --delete-branch

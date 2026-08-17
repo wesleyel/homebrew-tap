@@ -1,7 +1,4 @@
-# Template for the Homebrew formula, and the single source of truth for it.
-# The release workflow fills in 0.1.0 / 69c0a6467a2afea168e4c51f9eea2295be4e826a1fb4d64fa1513e005cb5b869 and pushes the result to
-# wesleyel/homebrew-tap. Do not edit Formula/clipd.rb in the tap directly;
-# the next release overwrites it.
+# version/url/sha256 are bumped by Renovate PRs and merged by .github/workflows/ci.yml.
 class Clipd < Formula
   desc "HTTP bridge to the macOS pasteboard"
   homepage "https://github.com/wesleyel/clipd"

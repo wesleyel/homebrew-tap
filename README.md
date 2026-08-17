@@ -6,6 +6,8 @@ wesleyel 的 Homebrew tap。
 brew tap wesleyel/tap
 ```
 
+源仓库只发自己的 GitHub Release。版本进 tap 由 [Renovate](https://docs.renovatebot.com/) 开 PR，`.github/workflows/ci.yml` 做 `brew style` / audit / formula test，cask 的 sha256 从 release 的 `SHA256SUMS*` 补上，通过后 squash 合并。
+
 ## Formula
 
 | 名字 | 说明 |
@@ -42,10 +44,4 @@ brew install --cask wesleyel/tap/open-dictionary-audio
 
 ## 关于 `Formula/` 和 `Casks/` 里的文件
 
-这些由各自源仓库的 release workflow 自动生成并推送，**不要手改** —— 下次发布会被覆盖。
-
-| 文件 | 模板 / 生成器 |
-| --- | --- |
-| `Formula/ncm-nowplaying.rb` | [ncm-nowplaying `packaging/homebrew/ncm-nowplaying.rb.tmpl`](https://github.com/wesleyel/ncm-nowplaying/blob/main/packaging/homebrew/ncm-nowplaying.rb.tmpl) |
-| `Formula/clipd.rb` | [clipd `packaging/homebrew/clipd.rb.tmpl`](https://github.com/wesleyel/clipd/blob/main/packaging/homebrew/clipd.rb.tmpl) |
-| `Casks/open-dictionary.rb` / `open-dictionary-audio.rb` | [opendict-apple `scripts/update_cask.py`](https://github.com/wesleyel/opendict-apple/blob/main/scripts/update_cask.py) |
+这些文件是 version / url / sha256 的真源。caveats、`service` 块的改动直接在本仓库提 PR。不要从源仓库 push 覆盖。
