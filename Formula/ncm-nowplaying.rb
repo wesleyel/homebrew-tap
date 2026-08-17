@@ -1,6 +1,6 @@
 # version/url/sha256 are bumped by Renovate PRs and merged by .github/workflows/ci.yml.
 class NcmNowplaying < Formula
-  desc "Real-time playback position and word-level lyrics from NetEase Cloud Music on macOS"
+  desc "Playback position and word-level lyrics from NetEase Cloud Music on macOS"
   homepage "https://github.com/wesleyel/ncm-nowplaying"
   url "https://github.com/wesleyel/ncm-nowplaying/releases/download/v0.1.1/ncm-nowplaying-0.1.1-macos-universal.tar.gz"
   sha256 "a16f5591b0516e246b5e63a7517fde002c99bcca1152ebb12884e04f3f927eed"
