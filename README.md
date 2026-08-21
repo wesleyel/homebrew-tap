@@ -29,13 +29,19 @@ brew services start clipd
 | --- | --- |
 | `open-dictionary` | Open Dictionary 英汉学习词典，不含发音（[源仓库](https://github.com/wesleyel/opendict-apple)） |
 | `open-dictionary-audio` | 同上，打包英美发音，离线可用 |
+| `zed-dev-termio-shim` | 让 Termio 将 Zed Dev 识别为正式版 Zed，并把文件夹转交给 Zed Dev |
 
 ```bash
 brew install --cask wesleyel/tap/open-dictionary
 brew install --cask wesleyel/tap/open-dictionary-audio
+brew install --cask wesleyel/tap/zed-dev-termio-shim
 ```
 
 两个词典装到同一路径，只能选一个。以前把 `opendict-apple` 当 tap（`wesleyel/dict`）用的，先 `brew untap wesleyel/dict`。
+
+`zed-dev-termio-shim` 要求已经安装 `/Applications/Zed Dev.app`。它安装一个 Bundle ID 为
+`dev.zed.Zed` 的轻量代理，Termio 的“在 Zed 中打开”会由代理转发给 Bundle ID 为
+`dev.zed.Zed-Dev` 的 Zed Dev。安装、升级或卸载后需要重启 Termio。
 
 ## 关于 `Formula/` 和 `Casks/` 里的文件
 
