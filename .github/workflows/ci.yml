@@ -27,6 +27,11 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref || github.ref_name }}
 
+      - name: Update Homebrew
+        run: |
+          brew update
+          brew --version
+
       - name: Tap this checkout
         run: brew tap wesleyel/tap "$GITHUB_WORKSPACE"
 
