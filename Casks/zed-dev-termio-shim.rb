@@ -18,13 +18,11 @@ cask "zed-dev-termio-shim" do
 
   preflight_steps do
     run "/bin/zsh",
-        args:           [
+        args: [
           "{{staged_path}}/zed-dev-termio-shim-build.sh",
           "{{staged_path}}/Zed Termio Shim.app",
           version,
-        ],
-        writable_paths: ["."],
-        writable_base:  :staged_path
+        ]
   end
 
   postflight_steps do
