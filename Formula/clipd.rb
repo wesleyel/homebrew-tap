@@ -2,8 +2,8 @@
 class Clipd < Formula
   desc "HTTP bridge to the macOS pasteboard"
   homepage "https://github.com/wesleyel/clipd"
-  url "https://github.com/wesleyel/clipd/releases/download/v0.1.1/clipd-0.1.1.tar.gz"
-  sha256 "6c470d4e76cc95414223b9217e4f2ff050958335cea8b8fc5144f19322b2839c"
+  url "https://github.com/wesleyel/clipd/releases/download/v0.1.2/clipd-0.1.2.tar.gz"
+  sha256 "1567aa1bb912f71eda0fba5c76e58ce2d89140dff04f1aad2830b681fc15bd22"
   license "MIT"
 
   depends_on :macos
