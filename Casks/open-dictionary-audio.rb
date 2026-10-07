@@ -3,8 +3,7 @@ cask "open-dictionary-audio" do
   version "2.0"
   sha256 "e55c6f0cdd2809da8c9c196a0df1f224f73b46d0428d13306aa3ebd7c4257bec"
 
-  url "https://github.com/wesleyel/opendict-apple/releases/download/appledict-v#{version}/OpenDictionary-audio.dictionary.zip",
-      verified: "github.com/wesleyel/opendict-apple/"
+  url "https://github.com/wesleyel/opendict-apple/releases/download/appledict-v#{version}/OpenDictionary-audio.dictionary.zip"
   name "Open Dictionary with Audio"
   name "Open Dictionary 英汉学习词典（含发音）"
   desc "English-Chinese learner dictionary for Dictionary.app with bundled pronunciation"
