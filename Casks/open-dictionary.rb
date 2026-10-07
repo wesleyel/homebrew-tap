@@ -3,8 +3,7 @@ cask "open-dictionary" do
   version "2.0"
   sha256 "e564aff72861a4d6e57425ffedb609f42f0c20bc7b39552460ad48f12decfb43"
 
-  url "https://github.com/wesleyel/opendict-apple/releases/download/appledict-v#{version}/OpenDictionary.dictionary.zip",
-      verified: "github.com/wesleyel/opendict-apple/"
+  url "https://github.com/wesleyel/opendict-apple/releases/download/appledict-v#{version}/OpenDictionary.dictionary.zip"
   name "Open Dictionary"
   name "Open Dictionary 英汉学习词典"
   desc "English-Chinese learner dictionary for Dictionary.app, built from Wiktionary"
