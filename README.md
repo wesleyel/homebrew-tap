@@ -6,7 +6,7 @@ wesleyel 的 Homebrew tap。
 brew tap wesleyel/tap
 ```
 
-源仓库只发自己的 GitHub Release。版本进 tap 由 [Renovate](https://docs.renovatebot.com/) 开 PR，`.github/workflows/ci.yml` 做 `brew style` / audit / formula test，cask 的 sha256 从 release 的 `SHA256SUMS*` 补上，通过后 squash 合并。
+新版本由各源仓库的发版流程直接写进本仓库：Go / Rust 程序用 GoReleaser 生成 formula，词典由 opendict-apple 的发版流程改写 cask。`.github/workflows/ci.yml` 对推进来的改动做 `brew style` / audit / install / test。详见 [docs/release-automation.md](docs/release-automation.md)。
 
 ## Formula
 
@@ -26,7 +26,7 @@ brew services start essaypilot
 
 `clipd` 用 Homebrew 的 service 开机自启，不要 `sudo brew services start` —— 剪贴板是按用户隔离的。
 
-`essaypilot` 从源码编译；服务监听 `127.0.0.1:8790` 并开启 MCP，数据在 `$(brew --prefix)/var/essaypilot`。
+`essaypilot` 服务监听 `127.0.0.1:8790` 并开启 MCP，数据在 `$(brew --prefix)/var/essaypilot`。
 
 ## Cask
 

@@ -1,4 +1,4 @@
-# version/url/sha256 are bumped by Renovate PRs and merged by .github/workflows/ci.yml.
+# Written by GoReleaser from wesleyel/ncm-nowplaying on each release; see docs/release-automation.md.
 class NcmNowplaying < Formula
   desc "Playback position and word-level lyrics from NetEase Cloud Music on macOS"
   homepage "https://github.com/wesleyel/ncm-nowplaying"

@@ -1,4 +1,4 @@
-# version is bumped by Renovate; sha256 is filled from the release SHA256SUMS by CI.
+# version/sha256 are written by wesleyel/opendict-apple on each release; see docs/release-automation.md.
 cask "open-dictionary-audio" do
   version "2.0"
   sha256 "e55c6f0cdd2809da8c9c196a0df1f224f73b46d0428d13306aa3ebd7c4257bec"

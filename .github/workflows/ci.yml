@@ -10,8 +10,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 env:
   HOMEBREW_NO_AUTO_UPDATE: 1
@@ -38,12 +37,19 @@ jobs:
       - name: List changed formulae and casks
         id: changed
         env:
-          BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
+          EVENT: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          BEFORE: ${{ github.event.before }}
         run: |
           set -euo pipefail
-          if [ -n "$BASE" ]; then
-            git fetch --no-tags origin "${{ github.base_ref }}"
-            files=$(git diff --name-only "$BASE"...HEAD)
+          # PR: files changed against the base branch. Push (a release workflow
+          # committing a formula/cask, or a manual commit): files in this push.
+          # Fallback when the previous commit is unknown: everything.
+          if [ "$EVENT" = pull_request ]; then
+            git fetch --no-tags origin "$BASE_REF"
+            files=$(git diff --name-only --diff-filter=d "origin/$BASE_REF"...HEAD)
+          elif [ -n "${BEFORE//0/}" ] && git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            files=$(git diff --name-only --diff-filter=d "$BEFORE" HEAD)
           else
             files=$(git ls-files 'Formula/*.rb' 'Casks/*.rb')
           fi
@@ -61,54 +67,6 @@ jobs:
           echo "casks=$casks" >> "$GITHUB_OUTPUT"
           echo "formulae: ${formulae:-none}"
           echo "casks: ${casks:-none}"
-
-      - name: Fill cask sha256 from release checksums
-        if: steps.changed.outputs.casks != ''
-        env:
-          GH_TOKEN: ${{ github.token }}
-          CASKS: ${{ steps.changed.outputs.casks }}
-        run: |
-          set -euo pipefail
-          patched=0
-          for name in $CASKS; do
-            file="Casks/${name}.rb"
-            version=$(sed -n 's/^  version "\(.*\)"/\1/p' "$file" | head -1)
-            case "$name" in
-              open-dictionary-audio)
-                asset="OpenDictionary-audio.dictionary.zip"
-                sums="SHA256SUMS-audio.txt"
-                ;;
-              open-dictionary)
-                asset="OpenDictionary.dictionary.zip"
-                sums="SHA256SUMS.txt"
-                ;;
-              *)
-                echo "no checksum mapping for $name, skip"
-                continue
-                ;;
-            esac
-            tmp=$(mktemp -d)
-            gh release download "appledict-v${version}" \
-              --repo wesleyel/opendict-apple --pattern "$sums" --dir "$tmp"
-            sha=$(awk -v a="$asset" '$2 == a { print $1 }' "$tmp/$sums")
-            if [ -z "$sha" ]; then
-              echo "::error::no checksum for $asset in $sums"
-              exit 1
-            fi
-            if ! grep -q "sha256 \"$sha\"" "$file"; then
-              sed -i.bak -E "s/^  sha256 \"[0-9a-f]{64}\"/  sha256 \"${sha}\"/" "$file"
-              rm -f "$file.bak"
-              patched=1
-              echo "updated $file -> $sha"
-            fi
-          done
-          if [ "$patched" -eq 1 ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add Casks
-            git commit -m "Fill cask sha256 from release checksums"
-            git push
-          fi
 
       - name: brew style
         run: brew style "$GITHUB_WORKSPACE/Formula" "$GITHUB_WORKSPACE/Casks"
@@ -134,17 +92,3 @@ jobs:
           for name in $CASKS; do
             brew audit --cask "wesleyel/tap/${name}"
           done
-
-      - name: Merge Renovate PR
-        if: github.event_name == 'pull_request' && github.actor == 'renovate[bot]'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR: ${{ github.event.pull_request.number }}
-        run: |
-          set -euo pipefail
-          state=$(gh pr view "$PR" --json state --jq .state)
-          if [ "$state" != "OPEN" ]; then
-            echo "PR $PR is $state, nothing to merge"
-            exit 0
-          fi
-          gh pr merge "$PR" --squash --delete-branch

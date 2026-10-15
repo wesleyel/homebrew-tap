@@ -1,4 +1,4 @@
-# version/url/sha256 are bumped by Renovate PRs and merged by .github/workflows/ci.yml.
+# Written by GoReleaser from wesleyel/EssayPilot on each release; see docs/release-automation.md.
 class Essaypilot < Formula
   desc "Workbench for grading and annotating essays with your own AI agent over MCP"
   homepage "https://github.com/wesleyel/EssayPilot"

@@ -1,4 +1,4 @@
-# version/url/sha256 are bumped by Renovate PRs and merged by .github/workflows/ci.yml.
+# Written by GoReleaser from wesleyel/clipd on each release; see docs/release-automation.md.
 class Clipd < Formula
   desc "HTTP bridge to the macOS pasteboard"
   homepage "https://github.com/wesleyel/clipd"

@@ -1,4 +1,4 @@
-# version is bumped by Renovate; sha256 is filled from the release SHA256SUMS by CI.
+# version/sha256 are written by wesleyel/opendict-apple on each release; see docs/release-automation.md.
 cask "open-dictionary" do
   version "2.0"
   sha256 "e564aff72861a4d6e57425ffedb609f42f0c20bc7b39552460ad48f12decfb43"
