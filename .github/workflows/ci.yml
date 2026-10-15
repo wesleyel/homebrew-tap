@@ -79,9 +79,11 @@ jobs:
         run: |
           set -euo pipefail
           for name in $FORMULAE; do
-            # Not --strict: GoReleaser always writes `version`, which strict
-            # audit flags as redundant with the version in the URL.
-            brew audit --online "wesleyel/tap/${name}"
+            # --except=version: GoReleaser always writes a `version` stanza, and
+            # Homebrew reads the same version from the release tag in the URL,
+            # so the "redundant version" check would always fail. Only that
+            # check is skipped.
+            brew audit --strict --online --except=version "wesleyel/tap/${name}"
             brew install "wesleyel/tap/${name}"
             brew test "wesleyel/tap/${name}"
           done

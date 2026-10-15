@@ -64,7 +64,7 @@ token 失效时，源仓库的 GitHub Release 照常发布，只有最后一步�
 `.github/workflows/ci.yml`，在 PR 和推到 `main` 时运行，只检查这次改动的 formula / cask：
 
 1. `brew style` 检查全部 formula 和 cask
-2. 改动的 formula：`brew audit --online`、`brew install`、`brew test`。不加 `--strict`：GoReleaser 总会写出 `version`，strict 审计会判它与 URL 里的版本重复而报错，GoReleaser 又没有去掉这一行的选项
+2. 改动的 formula：`brew audit --strict --online --except=version`、`brew install`、`brew test`。`--except=version` 只跳过“version 与 URL 里扫出的版本重复”这一项：GoReleaser 总会写出 `version`，而 Homebrew 会从 release 下载地址里的 tag（如 `/download/v2.1.1/`）读出同一个版本，这一项对 GoReleaser 生成的 formula 必然报错，GoReleaser 也没有去掉 `version` 的选项
 3. 改动的 cask：`brew audit --cask`
 
 在 Actions 页手动运行 ci（workflow_dispatch）会检查全部 formula 和 cask。
