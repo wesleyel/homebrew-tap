@@ -16,7 +16,7 @@ cask "open-dictionary" do
   end
 
   conflicts_with cask: "open-dictionary-audio"
-  depends_on macos: :catalina
+  depends_on :macos
 
   dictionary "Open Dictionary.dictionary"
 

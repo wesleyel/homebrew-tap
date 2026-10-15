@@ -12,7 +12,7 @@ cask "zed-dev-termio-shim" do
   end
 
   conflicts_with cask: "zed"
-  depends_on macos: :big_sur
+  depends_on :macos
 
   app "Zed Termio Shim.app"
 
