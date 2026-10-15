@@ -14,14 +14,19 @@ brew tap wesleyel/tap
 | --- | --- |
 | `ncm-nowplaying` | 网易云音乐 macOS 版实时播放进度 + 逐字歌词的 WebSocket 服务（[源仓库](https://github.com/wesleyel/ncm-nowplaying)） |
 | `clipd` | macOS 剪贴板 HTTP 桥：同一局域网的手机可把文字或图片写进 Mac 剪贴板（[源仓库](https://github.com/wesleyel/clipd)） |
+| `essaypilot` | 考研作文批阅台：评分、纠错、标重点交给你自己的 AI Agent（MCP）（[源仓库](https://github.com/wesleyel/EssayPilot)） |
 
 ```bash
 brew install wesleyel/tap/ncm-nowplaying
 brew install wesleyel/tap/clipd
 brew services start clipd
+brew install wesleyel/tap/essaypilot
+brew services start essaypilot
 ```
 
 `clipd` 用 Homebrew 的 service 开机自启，不要 `sudo brew services start` —— 剪贴板是按用户隔离的。
+
+`essaypilot` 从源码编译；服务监听 `127.0.0.1:8790` 并开启 MCP，数据在 `$(brew --prefix)/var/essaypilot`。
 
 ## Cask
 
