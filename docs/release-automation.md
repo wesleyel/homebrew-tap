@@ -64,8 +64,10 @@ token 失效时，源仓库的 GitHub Release 照常发布，只有最后一步�
 `.github/workflows/ci.yml`，在 PR 和推到 `main` 时运行，只检查这次改动的 formula / cask：
 
 1. `brew style` 检查全部 formula 和 cask
-2. 改动的 formula：`brew audit --strict --online`、`brew install`、`brew test`
+2. 改动的 formula：`brew audit --online`、`brew install`、`brew test`。不加 `--strict`：GoReleaser 总会写出 `version`，strict 审计会判它与 URL 里的版本重复而报错，GoReleaser 又没有去掉这一行的选项
 3. 改动的 cask：`brew audit --cask`
+
+在 Actions 页手动运行 ci（workflow_dispatch）会检查全部 formula 和 cask。
 
 发版推送是直接进 `main` 的，所以 CI 是事后检查：失败时新版本已经对用户可见，需要尽快在源仓库修 `.goreleaser.yaml`（或本仓库的 cask）后重新发版。
 

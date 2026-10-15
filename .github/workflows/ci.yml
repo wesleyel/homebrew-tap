@@ -4,6 +4,7 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch: # checks every formula and cask
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -44,7 +45,7 @@ jobs:
           set -euo pipefail
           # PR: files changed against the base branch. Push (a release workflow
           # committing a formula/cask, or a manual commit): files in this push.
-          # Fallback when the previous commit is unknown: everything.
+          # Manual run, or the previous commit is unknown: everything.
           if [ "$EVENT" = pull_request ]; then
             git fetch --no-tags origin "$BASE_REF"
             files=$(git diff --name-only --diff-filter=d "origin/$BASE_REF"...HEAD)
@@ -78,7 +79,9 @@ jobs:
         run: |
           set -euo pipefail
           for name in $FORMULAE; do
-            brew audit --strict --online "wesleyel/tap/${name}"
+            # Not --strict: GoReleaser always writes `version`, which strict
+            # audit flags as redundant with the version in the URL.
+            brew audit --online "wesleyel/tap/${name}"
             brew install "wesleyel/tap/${name}"
             brew test "wesleyel/tap/${name}"
           done
