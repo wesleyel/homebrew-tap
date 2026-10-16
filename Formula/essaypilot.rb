@@ -5,21 +5,21 @@
 class Essaypilot < Formula
   desc "Workbench for grading and annotating essays with your own AI agent over MCP"
   homepage "https://github.com/wesleyel/EssayPilot"
-  version "2.1.2"
+  version "2.1.3"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/wesleyel/EssayPilot/releases/download/v2.1.2/essaypilot_2.1.2_darwin_amd64.tar.gz"
-      sha256 "81c47af6055ee082a34132c26ccd252b19aaaebf6d3e2c05dc065e9427c65530"
+      url "https://github.com/wesleyel/EssayPilot/releases/download/v2.1.3/essaypilot_2.1.3_darwin_amd64.tar.gz"
+      sha256 "3d9afb253c77ce18b419a7da8f8b76a5dd87656a70af1519d9c1f736d2712669"
 
       define_method(:install) do
         bin.install "essaypilot"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/wesleyel/EssayPilot/releases/download/v2.1.2/essaypilot_2.1.2_darwin_arm64.tar.gz"
-      sha256 "65fad3b0939f27738feb5b0954e6b2ac69b1b168f5e5aa51c8e4f43802385caa"
+      url "https://github.com/wesleyel/EssayPilot/releases/download/v2.1.3/essaypilot_2.1.3_darwin_arm64.tar.gz"
+      sha256 "7e277307040a33ef8c8594eb71d86ff030afbb68ef890a07ac37641716999aaf"
 
       define_method(:install) do
         bin.install "essaypilot"
@@ -29,15 +29,15 @@ class Essaypilot < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/wesleyel/EssayPilot/releases/download/v2.1.2/essaypilot_2.1.2_linux_amd64.tar.gz"
-      sha256 "69cc3ca3f71fdbdc57a2b3a00bd3d7377efff80bc47ece6b69fb69b4d129a334"
+      url "https://github.com/wesleyel/EssayPilot/releases/download/v2.1.3/essaypilot_2.1.3_linux_amd64.tar.gz"
+      sha256 "66fd0d1af001ceba1bd21af0c0d5b23a43a0d5e98df70b3e64c9220077cd0da7"
       define_method(:install) do
         bin.install "essaypilot"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/wesleyel/EssayPilot/releases/download/v2.1.2/essaypilot_2.1.2_linux_arm64.tar.gz"
-      sha256 "b4c391c5ae2f2910f671f3a2129d6a696a2acf53e54d56d22d5f2c7f9c43acd9"
+      url "https://github.com/wesleyel/EssayPilot/releases/download/v2.1.3/essaypilot_2.1.3_linux_arm64.tar.gz"
+      sha256 "49d347c6fb31b4827e1ec275411877e90c1b801839cc87dcdd655af6a806eece"
       define_method(:install) do
         bin.install "essaypilot"
       end
