@@ -33,7 +33,9 @@ jobs:
           brew --version
 
       - name: Tap this checkout
-        run: brew tap wesleyel/tap "$GITHUB_WORKSPACE"
+        run: |
+          brew tap wesleyel/tap "$GITHUB_WORKSPACE"
+          brew trust wesleyel/tap
 
       - name: List changed formulae and casks
         id: changed
