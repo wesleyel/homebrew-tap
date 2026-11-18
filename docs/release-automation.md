@@ -17,6 +17,7 @@
 | `clipd` | [wesleyel/clipd](https://github.com/wesleyel/clipd)（Rust） | GoReleaser `brews`（Rust builder） | `Formula/clipd.rb` |
 | `ncm-nowplaying` | [wesleyel/ncm-nowplaying](https://github.com/wesleyel/ncm-nowplaying)（Rust） | GoReleaser `brews`（Rust builder） | `Formula/ncm-nowplaying.rb` |
 | `open-dictionary`、`open-dictionary-audio` | [wesleyel/opendict-apple](https://github.com/wesleyel/opendict-apple) | `scripts/update-tap-cask.sh`，在 publish job 末尾运行 | `Casks/open-dictionary*.rb` |
+| `flowie` | [wesleyel/flowie](https://github.com/wesleyel/flowie)（Rust，universal `.app` zip） | `scripts/update-tap-cask.sh`，在 release 的 macos-app job 末尾运行 | `Casks/flowie.rb` |
 | `zed-dev-termio-shim` | 本仓库 | 手改，版本跟着本仓库走 | `Casks/zed-dev-termio-shim.rb` |
 
 ### GoReleaser 管的 formula
@@ -47,12 +48,12 @@ scripts/update-tap-cask.sh <cask> <version> <SHA256SUMS 文件>
 
 - Repository access：只选 `wesleyel/homebrew-tap`
 - Permissions：Contents → Read and write（其余不给）
-- 用到它的仓库：EssayPilot、clipd、ncm-nowplaying、opendict-apple
+- 用到它的仓库：EssayPilot、clipd、ncm-nowplaying、opendict-apple、flowie
 
 换 token 或到期续期后，逐个更新 secret：
 
 ```bash
-for r in EssayPilot clipd ncm-nowplaying opendict-apple; do
+for r in EssayPilot clipd ncm-nowplaying opendict-apple flowie; do
   gh secret set HOMEBREW_TAP_GITHUB_TOKEN --repo wesleyel/$r < token.txt
 done
 ```
