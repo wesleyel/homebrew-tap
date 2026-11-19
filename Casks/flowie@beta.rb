@@ -1,8 +1,8 @@
 # version/sha256 are written by wesleyel/flowie on each release, release candidates included;
 # see docs/release-automation.md.
 cask "flowie@beta" do
-  version "1.0.0-rc.1"
-  sha256 "def60f3e6086dd20a7115e605063b393075ea8561e13870ac1c8d6db9ea41160"
+  version "1.0.0-rc.2"
+  sha256 "c7251754cc0a2b8a45e558c22d3005a0546237d547ca5f055ca0e182fd9f2a31"
 
   url "https://github.com/wesleyel/flowie/releases/download/v#{version}/Flowie-#{version}-macos.zip"
   name "Flowie"
