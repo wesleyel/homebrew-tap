@@ -2,7 +2,7 @@
 # (the newest version only); see docs/release-automation.md.
 cask "flowie" do
   version "1.0.0-rc.3"
-  sha256 "23e40094c87ca7b919d54096eb72b046e1cbb74d1a851f62ca6eadbe9fbf4459"
+  sha256 "21b0c6fd89b20241c15ac4269b51cc2f53bbc558525c7be248915adb395850a6"
 
   url "https://github.com/wesleyel/flowie/releases/download/v#{version}/Flowie-#{version}-macos.zip"
   name "Flowie"
