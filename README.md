@@ -35,7 +35,6 @@ brew services start essaypilot
 | `open-dictionary` | Open Dictionary 英汉学习词典，不含发音（[源仓库](https://github.com/wesleyel/opendict-apple)） |
 | `open-dictionary-audio` | 同上，打包英美发音，离线可用 |
 | `flowie` | Flowie 开源版：键盘优先的大纲笔记，数据存在本机（[源仓库](https://github.com/wesleyel/flowie)） |
-| `flowie@beta` | 同上，跟进候选版（`-rc.N`）和正式版 |
 | `zed-dev-termio-shim` | 让 Termio 将 Zed Dev 识别为正式版 Zed，并把文件夹转交给 Zed Dev |
 
 ```bash
@@ -47,7 +46,7 @@ brew install --cask wesleyel/tap/zed-dev-termio-shim
 
 两个词典装到同一路径，只能选一个。以前把 `opendict-apple` 当 tap（`wesleyel/dict`）用的，先 `brew untap wesleyel/dict`。
 
-`flowie` 是 GitHub Release 里的开源版（未公证，安装后会去掉隔离属性），数据在 `~/Library/Application Support/Flowie`。它和 Mac App Store 版都装到 `/Applications/Flowie.app`，只能留一个。`flowie@beta` 跟进候选版，和 `flowie` 互斥；1.0.0 正式版发布前，`flowie` 指向唯一的构建 1.0.0-rc.1。
+`flowie` 是 GitHub Release 里的开源版（未公证，安装后会去掉隔离属性），数据在 `~/Library/Application Support/Flowie`。它和 Mac App Store 版都装到 `/Applications/Flowie.app`，只能留一个。候选版（`-rc.N`）和正式版都推送到 `flowie`。原来的 `flowie@beta` 已并入 `flowie`，`brew upgrade` 会自动迁移过去。
 
 `zed-dev-termio-shim` 要求已经安装 `/Applications/Zed Dev.app`。它安装一个 Bundle ID 为
 `dev.zed.Zed` 的轻量代理，Termio 的“在 Zed 中打开”会由代理转发给 Bundle ID 为

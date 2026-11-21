@@ -17,8 +17,7 @@
 | `clipd` | [wesleyel/clipd](https://github.com/wesleyel/clipd)（Rust） | GoReleaser `brews`（Rust builder） | `Formula/clipd.rb` |
 | `ncm-nowplaying` | [wesleyel/ncm-nowplaying](https://github.com/wesleyel/ncm-nowplaying)（Rust） | GoReleaser `brews`（Rust builder） | `Formula/ncm-nowplaying.rb` |
 | `open-dictionary`、`open-dictionary-audio` | [wesleyel/opendict-apple](https://github.com/wesleyel/opendict-apple) | `scripts/update-tap-cask.sh`，在 publish job 末尾运行 | `Casks/open-dictionary*.rb` |
-| `flowie` | [wesleyel/flowie](https://github.com/wesleyel/flowie)（Rust，universal `.app` zip） | `scripts/update-tap-cask.sh`，在 release 的 macos-app job 末尾运行 | `Casks/flowie.rb` |
-| `flowie@beta` | 同上，跟进候选版（`vX.Y.Z-rc.N`，GitHub pre-release）和正式版 | 同上：候选版只改它，正式版两个都改 | `Casks/flowie@beta.rb` |
+| `flowie` | [wesleyel/flowie](https://github.com/wesleyel/flowie)（Rust，universal `.app` zip），候选版（`vX.Y.Z-rc.N`）和正式版都推送，只推最新版本 | `scripts/update-tap-cask.sh`，在 release 的 macos-app job 末尾运行 | `Casks/flowie.rb`（`flowie@beta` 已并入，见 `cask_renames.json`） |
 | `zed-dev-termio-shim` | 本仓库 | 手改，版本跟着本仓库走 | `Casks/zed-dev-termio-shim.rb` |
 
 ### GoReleaser 管的 formula
